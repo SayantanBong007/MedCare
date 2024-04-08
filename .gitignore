@@ -14,11 +14,11 @@ backend/node_modules
 /coverage
 
 # next.js
-/caretaker/.next/
-/caretaker/out/
-/caretaker/.env
+/frontend/.next/
+/frontend/out/
+/frontend/.env
 /backend/.env
-/fit-band-server/.env
+
 
 # production
 /build
