@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "backend/.env" });
 
 //Define the MongoDB connection URL
-const mongoURL = process.env.MONGODB_URL;
+const mongoURL = "mongodb+srv://aviral:CanluDIihICUUFI4@cluster0.3idi7uc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 //const mongoURL = process.env.MONGODB_URL;
+
 
 //Set up MongoDB connection
 mongoose.connect(mongoURL);

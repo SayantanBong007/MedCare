@@ -16,5 +16,5 @@ app.listen(PORT, () => {
 // const candidateRoutes = require("./routes/candidateRoutes");
 
 //Use the routers
-// app.use("/user", userRoutes);
+app.use('/api/v1', userRoutes);
 // app.use("/candidate", candidateRoutes);
