@@ -57,7 +57,8 @@ router.get("/profile/:userId", async (req, res) => {
     // console.log("User Data", userData);
 
     // const userId = userData.id;
-    userId = req.params.userId;
+    
+    const userId = req.params.userId;
     const user = await User.findById(userId);
 
     res.status(200).json({ user });
