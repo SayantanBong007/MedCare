@@ -16,5 +16,5 @@ const userRoutes = require("./routes/userRoutes");
 // const candidateRoutes = require("./routes/candidateRoutes");
 
 //Use the routers
-app.use("/role/user", userRoutes);
+app.use('/api/v1', userRoutes);
 // app.use("/candidate", candidateRoutes);
