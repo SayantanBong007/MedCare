@@ -1,36 +1,36 @@
 // jwtMiddleware.js
 
 const jwt = require('jsonwebtoken');
-const User = require('./models/user');
+const { jwtSecret } = "ouhfsfnasdfnueafnouafouae"; // Import your JWT secret key
 
-// Middleware to verify JWT token
-const jwtAuthMiddleware = async (req, res, next) => {
-  // Extract token from request headers
+// Middleware to generate JWT token with user information including roles
+const generateToken = (user) => {
+  const payload = {
+    id: user.id,
+    email: user.email,
+    roles: user.roles // Include user's roles in the JWT payload
+  };
+  return jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
+};
+
+// Middleware to verify JWT token and extract user information including roles
+const jwtAuthMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
 
-  // Check if token is provided
   if (!token) {
     return res.status(401).json({ error: 'Unauthorized: No token provided' });
   }
 
   try {
-    // Verify token
-    const decoded = jwt.verify(token, "popipiiisjd");
+    const decoded = jwt.verify(token, jwtSecret);
 
-    // Find user by ID from token payload
-    const user = await User.findById(decoded.id);
+    // Attach user data including roles to request for further use in routes
+    req.user = decoded;
 
-    // Check if user exists
-    if (!user) {
-      return res.status(401).json({ error: 'Unauthorized: Invalid token' });
-    }
-
-    // Attach user object to request for further use in routes
-    req.user = user;
     next();
   } catch (error) {
     return res.status(401).json({ error: 'Unauthorized: Invalid token' });
   }
 };
 
-module.exports = { jwtAuthMiddleware };
+module.exports = { generateToken, jwtAuthMiddleware };

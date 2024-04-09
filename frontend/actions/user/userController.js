@@ -1,6 +1,15 @@
 import axios from "axios";
+const path = require('path');
+const express = require('express');
 
-const base_url = "http://localhost:4000";
+const nodemailer = require('nodemailer');
+const app = express();
+const cors = require('cors')
+app.use(cors())
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.json());
+app.use(express.static(buildPath)); 
+const base_url = "http://localhost:3000";
 
 const config = {
   headers: { "Content-Type": "application/json" },
@@ -139,3 +148,4 @@ export async function getUser() {
     };
   }
 }
+

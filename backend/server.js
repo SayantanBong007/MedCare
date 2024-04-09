@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
+const receiptRouter = require('./routes/recieptRouter');
 require("dotenv").config();
 
 const bodyParser = require("body-parser");
@@ -11,10 +12,12 @@ app.listen(PORT, () => {
   console.log("listening on port 3000");
 });
 
+app.use(receiptRouter);
+
 //Import the router files
 // const userRoutes = require("./routes/userRoutes");
 // const candidateRoutes = require("./routes/candidateRoutes");
 
 //Use the routers
-app.use('/api/v1', userRoutes);
+// app.use('/api/v1', userRoutes);
 // app.use("/candidate", candidateRoutes);
