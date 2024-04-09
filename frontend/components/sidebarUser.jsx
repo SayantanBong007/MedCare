@@ -1,7 +1,6 @@
 "use client";
 
 import { Montserrat } from "next/font/google";
-import { cn } from "../lib/utils";
 
 import {
   BarChart3,
@@ -16,6 +15,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "../lib/utils";
 // import { logout } from "@/actions/user/auth";
 
 const montserrat = Montserrat({
@@ -27,20 +27,14 @@ const routes = [
   {
     label: "Dashboard",
     icon: LayoutDashboard,
-    href: "/manager",
-    color: "text-cyan-500",
+    href: "/user",
+    color: "text-pink-500",
   },
   {
     label: "Profile",
     icon: CircleUserRound,
-    href: "/manager/profile",
+    href: "/user/profile",
     color: "text-violet-500",
-  },
-  {
-    label: "Details",
-    icon: BarChart3,
-    href: "/manager/details",
-    color: "text-pink-500",
   },
 
   {
@@ -51,7 +45,7 @@ const routes = [
   },
 ];
 
-const SidebarManager = () => {
+const SidebarUser = () => {
   const pathname = usePathname();
   // const handleLogout = async () => {
   //   await logout();
@@ -59,7 +53,7 @@ const SidebarManager = () => {
   return (
     <div className="space-y-4 py-4 flex flex-col h-[100vh] !bg-[#111827] !text-white w-[100%]">
       <div className="px-3 py-2 flex-1 ">
-        <Link href="/manager" className="flex items-center pl-3 mb-14">
+        <Link href="/user" className="flex items-center pl-3 mb-14">
           <div className="relative w-8 h-8 mr-8">
             <Image src="/logo.png" alt="Logo" fill />
           </div>
@@ -96,4 +90,4 @@ const SidebarManager = () => {
   );
 };
 
-export default SidebarManager;
+export default SidebarUser;

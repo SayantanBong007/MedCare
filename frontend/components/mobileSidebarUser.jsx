@@ -4,10 +4,10 @@ import { Menu } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import Sidebar from "./sidebarManager";
 import { useEffect, useState } from "react";
+import SidebarUser from "./sidebarUser";
 
-const MobileSidebarManger = () => {
+const MobileSidebarUser = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -26,10 +26,10 @@ const MobileSidebarManger = () => {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="p-0">
-        <Sidebar />
+        <SidebarUser />
       </SheetContent>
     </Sheet>
   );
 };
 
-export default MobileSidebarManger;
+export default MobileSidebarUser;
