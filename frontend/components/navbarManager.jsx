@@ -1,12 +1,13 @@
 import React from "react";
-import MobileSidebar from "./mobileSidebarManager";
 
-const Navbar = () => {
+import MobileSidebarManger from "./mobileSidebarManager";
+
+const NavbarManager = () => {
   return (
     <div className="flex items-center p-4 md:p-0">
-      <MobileSidebar />
+      <MobileSidebarManger />
     </div>
   );
 };
 
-export default Navbar;
+export default NavbarManager;
