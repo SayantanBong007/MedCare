@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-exports.sendReceipt = async (req, res) => {
+const sendReceipt = async (req, res) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -35,3 +35,5 @@ exports.sendReceipt = async (req, res) => {
         res.status(500).json({ status: false, respMesg: 'Failed to send email' });
     }
 };
+
+module.exports = { sendReceipt };

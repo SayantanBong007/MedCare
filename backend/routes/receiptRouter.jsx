@@ -4,6 +4,6 @@ const express = require('express');
 const router = express.Router();
 
 
-router.route("/").post(sendReceipt);
+router.post('/', sendReceipt);
 
 module.exports = router;
