@@ -1,17 +1,13 @@
-const express = require("express");
-const router = express.Router();
-const {
-  deleteStore,
-  getStoreDetails,
-  registerStore,
-  updateStoreDetails,
-} = require("../Controllers/store.controller.js");
+import { Router } from "express";
+import { deleteStore, getStoreDetails, registerStore, updateStoreDetails } from "../Controllers/store.controller.js";
 
-router.post("/", registerStore);
+const router = Router()
 
+router.route("/").post(registerStore);
 router.route("/:_id")
-  .get(getStoreDetails)
-  .patch(updateStoreDetails)
-  .delete(deleteStore);
+      .get(getStoreDetails)
+      .patch(updateStoreDetails)
+      .delete(deleteStore)
 
-module.exports = router;
+
+export default router

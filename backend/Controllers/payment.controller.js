@@ -1,8 +1,14 @@
-const nodemailer = require('nodemailer');
+import { createTransport } from 'nodemailer';
+import { asyncHandler } from '../utils/asyncHandler.js'
+import { Payment } from '../model/payment.js';
+import { ApiResponse } from "../utils/ApiResponse.js";
+import {ApiError} from "../utils/ApiError.js"
 
 const sendReceipt = async (req, res) => {
     try {
-        const transporter = nodemailer.createTransport({
+        console.log("Sending Email");
+        const transporter = createTransport({
+           
             service: 'gmail',
             auth: {
                 user: 'a_jain@ce.iitr.ac.in',
@@ -36,4 +42,4 @@ const sendReceipt = async (req, res) => {
     }
 };
 
-module.exports = { sendReceipt };
+export { sendReceipt };

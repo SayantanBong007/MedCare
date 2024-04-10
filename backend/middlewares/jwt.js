@@ -1,6 +1,6 @@
 // jwtMiddleware.js
 
-const jwt = require('jsonwebtoken');
+import { sign, verify } from 'jsonwebtoken';
 const  jwtSecret  = "ouhfsfnasdfnueafnouafouae"; // Import your JWT secret key
 //console.log(jwtSecret);
 // Middleware to generate JWT token with user information including roles
@@ -9,7 +9,7 @@ const generateToken = (user) => {
     email: user.email,
     roles: user.roles // Include user's roles in the JWT payload
   };
-  return jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
+  return sign(payload, jwtSecret, { expiresIn: '1h' });
 };
 
 // Middleware to verify JWT token and extract user information including roles
@@ -21,7 +21,7 @@ const jwtAuthMiddleware = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, jwtSecret);
+    const decoded = verify(token, jwtSecret);
 
     // Attach user data including roles to request for further use in routes
     req.user = decoded;
@@ -33,4 +33,4 @@ const jwtAuthMiddleware = (req, res, next) => {
   }
 };
 //generateToken();
-module.exports = { generateToken, jwtAuthMiddleware };
+export default { generateToken, jwtAuthMiddleware };

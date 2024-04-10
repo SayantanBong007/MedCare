@@ -1,47 +1,80 @@
-const asyncHandler = require('../utils/asyncHandler.js');
-const { Store } = require('../models/store.js');
-const { ApiResponse } = require('../utils/ApiResponse.js');
-const { ApiError } = require('../utils/ApiError.js');
+import { asyncHandler } from '../utils/asyncHandler.js'
+import { Store } from '../model/store.js';
+import { ApiResponse } from "../utils/ApiResponse.js";
+import {ApiError} from "../utils/ApiError.js"
+import mongoose from "mongoose";
 
-const registerStore = asyncHandler(async (req, res) => {
-    const { ownername, location, storename, noofworker, stock } = req.body;
-    
-    // Check if all required fields are provided
-    if (![ownername, location, storename, noofworker].every(Boolean)) {
-        throw new ApiError(400, 'All fields are required');
+const registerStore = asyncHandler(async(req,res)=>{
+    console.log("hello");
+    const {ownername,location,storename,noofworker,stock} = req.body;
+    console.log(req.body);
+    if ([ownername, location, storename, noofworker].some(field => !field || (typeof field === 'string' && field.trim() === ""))) {
+        throw new ApiError(400, "All fields are required");
     }
 
-    // Check if a store with the same name already exists
     const existedStore = await Store.findOne({ storename: storename });
+
     if (existedStore) {
-        throw new ApiError(409, 'Store with storename already exists');
+        throw new ApiError(409, "Store with storename already exists")
     }
-
-    // Create a new store
     const store = await Store.create({
-        ownername: ownername.toLowerCase(),
-        location: location.toLowerCase(),
-        storename: storename.toLowerCase(),
-        noofworker: noofworker,
-        stock,
-    });
+       ownername: ownername.toLowerCase(),
+       location: location.toLowerCase(),
+       storename: storename.toLowerCase(),
+       noofworker : noofworker, 
+       stock,
+    })
 
-    // Retrieve the created store
     const createdStore = await Store.findById(store._id);
+    
 
     if (!createdStore) {
-        throw new ApiError(500, 'Something went wrong while registering the Store');
+        throw new ApiError(500, "Something went wrong while registering the Store")
     }
 
-    // Return success response
-    res.status(201).json(new ApiResponse(200, createdStore, 'Store registered Successfully'));
-});
+    return res.status(201).json(
+        new ApiResponse(200, createdStore, "Store registered Successfully")
+    )
+})
 
-// Similarly, convert other functions to use CommonJS syntax
 
-module.exports = {
+const updateStoreDetails = asyncHandler(async(req,res)=>{
+            const id = req.params._id;
+            const updatefields = req.body;
+            const store = await Store.findByIdAndUpdate(id,{
+                $set:updatefields
+            },{new:true})
+
+            return res
+            .status(200)
+            .json(new ApiResponse(200, store, "Store details updated successfully"));
+})
+
+
+const getStoreDetails = asyncHandler(async(req,res)=>{
+
+    const id = req.params._id;
+    console.log(id);
+    const store = await Store.findById(id);
+    console.log(store);
+    return res
+    .status(200)
+    .json(new ApiResponse(200, store, "Store details deleted successfully"));
+})
+
+
+const deleteStore = asyncHandler(async(req,res)=>{
+    const id = req.params._id;
+    const store = await Store.findByIdAndDelete(id);
+    return res
+    .status(200)
+    .json(new ApiResponse(200, store, "Store details deleted successfully"));
+})
+
+
+export {
     registerStore,
     updateStoreDetails,
     getStoreDetails,
     deleteStore
-};
+}
