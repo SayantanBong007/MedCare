@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 const MedicineCard = () => {
   return (
@@ -21,7 +22,9 @@ const MedicineCard = () => {
         <p className='text-[0.8rem]'>Delivery within <span className='text-[#0360D9]'>2 days</span></p>
 
       </div>
+      <Link href="/user/medicine/id">
       <button className='h-[2rem] w-[6rem] ml-[1rem] rounded-md p-[1rem] text-[#FFFFFF] bg-[#0360D9] text-sm flex justify-center items-center'>Buy Now</button>
+      </Link>
       </div>
     </div>
   )
