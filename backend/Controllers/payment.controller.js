@@ -42,4 +42,38 @@ const sendReceipt = async (req, res) => {
     }
 };
 
-export { sendReceipt };
+const spay = async (req, res) => {
+    console.log(req.body.token);
+  
+    // Destructuring assignment to improve readability
+    const { token, amount } = req.body;
+  
+    // Generate idempotency key
+    const idempotenctKey = uuidv4();
+  
+    try {
+      // Create a Stripe customer
+      const customer = await stripe.customers.create({
+        email: token.email,
+        source: token.id,
+      });
+  
+      // Create a Stripe charge
+      const charge = await stripe.charges.create({
+        amount,
+        currency: 'inr',
+        customer: customer.id,
+        receipt_email: token.email,
+      }, {
+        idempotenctKey, // Add idempotency key for retry safety
+      });
+  
+      // Send successful response with charge details
+      res.status(200).json(charge);
+    } catch (err) {
+      console.error(err); // Log error for debugging
+      // Handle errors appropriately, e.g., return appropriate error code to client
+    }
+  };
+  
+  module.exports = { spay,sendReceipt }; // Assuming sendReceipt is a typo
