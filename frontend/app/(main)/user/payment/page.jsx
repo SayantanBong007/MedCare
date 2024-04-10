@@ -183,7 +183,9 @@ const PaymentPage = () => {
     <Image src="/pana.png" width="250" height="250"/>
     
   </div>
+  
   <div style={{ marginLeft: '20px' }}>
+    
   <p>{product.name} - ₹{product.price}</p>
     <p  style={{ marginBottom: '20px' }}>Quantity - {product.quantity}</p>
     <p  style={{ marginBottom: '40px' }}>Final Price - </p>

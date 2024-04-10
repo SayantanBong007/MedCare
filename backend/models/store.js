@@ -19,5 +19,5 @@ const storeSchema = new mongoose.Schema({
   },
 });
 
-const Candidate = mongoose.model("Candidate", candidateSchema);
-module.exports = Candidate;
+const Store = mongoose.model("Store", storeSchema);
+module.exports = Store;
