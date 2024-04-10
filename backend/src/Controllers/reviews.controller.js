@@ -15,6 +15,7 @@ const getreview = asyncHandler(async(req,res)=>{
 })
 
 const postreview = asyncHandler(async(req,res)=>{
+    console.log(req.body);
     if(req.body!=null){
         req.body.author=req.user._id;
        const review = await Review.create(req.body);
