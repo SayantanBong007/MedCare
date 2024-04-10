@@ -6,9 +6,9 @@ import mongoose from "mongoose";
 
 const registerStore = asyncHandler(async(req,res)=>{
     console.log("hello");
-    const {ownername,location,storename,noofworker,stock} = req.body;
+    const {ownername,location,storename,noofworker,stock,rating} = req.body;
     console.log(req.body);
-    if ([ownername, location, storename, noofworker].some(field => !field || (typeof field === 'string' && field.trim() === ""))) {
+    if ([ownername, location, storename, noofworker,rating].some(field => !field || (typeof field === 'string' && field.trim() === ""))) {
         throw new ApiError(400, "All fields are required");
     }
 
@@ -23,6 +23,7 @@ const registerStore = asyncHandler(async(req,res)=>{
        storename: storename.toLowerCase(),
        noofworker : noofworker, 
        stock,
+       rating,
     })
 
     const createdStore = await Store.findById(store._id);

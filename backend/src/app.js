@@ -13,6 +13,7 @@ import medicineRouter from './routes/medicines.routes.js'
 import reviewRouter from './routes/reviews.routes.js'
 import userRouter from './routes/user.routes.js'
 import reciptRouter from './routes/payment.routes.js'
+import orderRouter from './routes/order.routes.js'
 //routes declaration
 
 app.use("/api/v1/user",userRouter);
@@ -22,5 +23,5 @@ app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/medicine",medicineRouter);
 app.use("/api/v1/review", reviewRouter);
 app.use("/api/v1/reciept",reciptRouter);
-
+app.use("/api/v1/order", orderRouter);
 export {app};

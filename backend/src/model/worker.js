@@ -21,6 +21,10 @@ const workerSchema = new Schema(
             min: 0, 
             max: 100
         },
+        post:{
+            type:String,
+            required:true
+        }
     },
     {
         timestamps:true

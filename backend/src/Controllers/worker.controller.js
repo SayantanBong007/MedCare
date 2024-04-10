@@ -6,9 +6,9 @@ import { asyncHandler } from '../utils/asyncHandler.js'
 
 const registerWorker = asyncHandler(async(req,res)=>{
     console.log("hello");
-    const {workername,storename,experience} = req.body;
+    const {workername,storename,experience,post} = req.body;
     console.log(req.body);
-    if ([workername,storename,experience].some(field => !field || (typeof field === 'string' && field.trim() === ""))) {
+    if ([workername,storename,experience,post].some(field => !field || (typeof field === 'string' && field.trim() === ""))) {
         throw new ApiError(400, "All fields are required");
     }
     const existedWorker = await Worker.findOne({ workername : workername });
@@ -19,6 +19,7 @@ const registerWorker = asyncHandler(async(req,res)=>{
     const worker = await Worker.create({
        workername: workername.toLowerCase(),
        storename: storename,
+       post:post,
        experience
     })
 

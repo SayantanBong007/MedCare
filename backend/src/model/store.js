@@ -36,7 +36,13 @@ const storeSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref: "Medicine"
             }
-        ]
+        ],
+        rating:{
+            type:Number,
+            min:0,
+            max:5,
+        }
+        
     },
     {
         timestamps: true

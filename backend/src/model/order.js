@@ -2,10 +2,11 @@ import mongoose, {Schema} from "mongoose";
 
 
 
-const medicineSchema = new Schema({
+const orderSchema = new Schema({
     name:{
         type:String,
         required:true,
+        unique:true
     },
     description:{
         type:String,
@@ -28,13 +29,28 @@ const medicineSchema = new Schema({
         max:5,
         default:3
     },
-    storename:{
+    orderId:{
+        type:String,
+        required:true,
+    },
+    user:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
+    },
+    location:{
         type:String,
         required:true
+    },
+    storename:{
+        type:String,
+        required:true,
+    },
+    ordertype:{
+        type:Boolean,
+        default:true,
     }
-
 },{
     timestamps:true
 });
 
-export const Medicine = mongoose.model('Medicine',medicineSchema);
+export const Order = mongoose.model('Order',orderSchema);
