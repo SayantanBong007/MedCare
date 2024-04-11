@@ -1,9 +1,14 @@
 import React from 'react'
+import ReviewCard from '../../../../components/ReviewCard'
+// import pencil from 'lucide-react'
+import {Pencil} from 'lucide-react'
+import Link from "next/link"
 
 const page = () => {
   return (
     <div className='absolute left-[15vw] w-[85vw] h-[100%] bg-[#E1EEFF] p-[3rem]'>
-      <div className='w-full bg-[#FFFFFF] h-full flex p-[2rem]'>
+      <div className='w-full bg-[#FFFFFF] h-full overflow-auto  p-[2rem]'>
+        <div className='flex'>
         <div className='w-2/3 font-[Nunito Sans] text-black'>
           <h4 className='text-[3rem] '>Paracetamol</h4>
           <p className='text-[1.2rem] mt-[0.3rem]'>Delivery within <span className='text-[#0360D9]'>2 days</span></p>
@@ -33,8 +38,26 @@ const page = () => {
         <div>
           <img src="/medicine.png" alt="" />
         </div>
+        </div>
+        <div className='mt-[2.5rem] flex w-full justify-between items-center'>
+        <h2 className='text-3xl text-black  '>Reviews:</h2>
+        <Link href="/user/medicine/id/writereview">
+        <button className='bg-[#0360D9] p-[1rem] w-[9rem]  rounded-md text-[#FFFFFF] text-[1.3rem] flex items-center justify-around'>
+          <Pencil/>
+          <span>Write</span>
+        </button>
+        </Link>
+
+        </div>
+        <div className='mt-[2rem]'>
+        <ReviewCard/>
+        <ReviewCard/>
+        <ReviewCard/>
+        <ReviewCard/>
+      </div>
 
       </div>
+      
     </div>
   )
 }
