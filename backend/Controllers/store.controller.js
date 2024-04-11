@@ -86,7 +86,9 @@ const getAllStores = asyncHandler(async (req, res) => {
                 store.location.coordinates[0], 
                 store.location.coordinates[1]
             );
-            store.distance = distance; // Add distance property to each store
+            const time = distance/40;
+            store.distance = distance;
+            store.time = time;
         });
 
         // Sort stores by distance
