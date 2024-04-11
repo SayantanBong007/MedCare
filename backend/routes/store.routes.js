@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteStore, getStoreDetails, registerStore, updateStoreDetails } from "../Controllers/store.controller.js";
+import { deleteStore, getStoreDetails, registerStore, updateStoreDetails,getAllStores } from "../Controllers/store.controller.js";
 
 const router = Router()
 
@@ -8,6 +8,7 @@ router.route("/:_id")
       .get(getStoreDetails)
       .patch(updateStoreDetails)
       .delete(deleteStore)
+      .get(getAllStores)
 
 
 export default router
