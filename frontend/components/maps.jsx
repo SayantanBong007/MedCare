@@ -66,6 +66,8 @@ export const ProfitMap = () => {
 };
 
 export const UserMap1 = () => {
+  // const ndata=[] ;
+  //   for(let i=0 ;i<7 ;i++) ndata.push(data2[(Math.floor(Math.random*15))])
   return (
     <div className=" h-[100%] ml-[1rem] w-full">
       <div className=" bg-white rounded-[0.4rem] p-[1rem] ">
@@ -82,6 +84,12 @@ export const UserMap1 = () => {
   );
 };
 export const UserMap2 = () => {
+  const ar= data2.datasets[0].data
+  const len= data2.datasets[0].data.length 
+  console.log(len) 
+  const newar= [] ;
+  for(let i=0 ;i<5 ;i++) newar.push(ar[Math.floor(Math.random()*len)])
+  data2.datasets[0].data= newar
   return (
     <div className=" h-[100%]  ml-[1rem] w-full">
       <div className=" bg-white rounded-[0.4rem] p-[1rem] ">
@@ -98,6 +106,12 @@ export const UserMap2 = () => {
   );
 };
 export const UserMap2pie = () => {
+  const ar= data2.datasets[0].data
+  const len= data2.datasets[0].data.length  
+  console.log(len) 
+  const newar= [] ;
+  for(let i=0 ;i<5 ;i++) newar.push(ar[Math.floor(Math.max(0,Math.random()-0.5)*len)])
+  data2.datasets[0].data= newar
   return (
     <div className=" h-full ml-[1rem] w-full">
       <div className=" bg-white rounded-[0.4rem] p-[1rem] ">

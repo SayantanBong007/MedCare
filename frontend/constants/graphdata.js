@@ -11,11 +11,12 @@ export const timeLabels = [
   
   // Use the timeLabels array in your data objects
   export const data1 = {
+    
     labels: timeLabels,
     datasets: [
       {
         label: "Diastolic",
-        data: [75, 72, 75, 73, 76, 73, 78],
+        data: [75, 72, 75, 73, 76, 73, 78,89 ,71 ,79 ,67,90,72,68,63],
         fill: false,
         //   borderColor: "rgb(105,105,105)",
         //   backgroundColor: "#9BD0F5",
@@ -36,9 +37,10 @@ export const timeLabels = [
     datasets: [
       {
         label: "user",
-        data: [10, 30, 75, 40],
+        data: [10,70,50,90,15,60,45,30,25,80],
         fill: false,
   
+        
         borderColor: "rgb(210, 43, 43)",
         backgroundColor: "#9BD0F5",
         tension: 0.1,
