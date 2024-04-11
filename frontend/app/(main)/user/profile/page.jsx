@@ -1,8 +1,31 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import {
+  CurrentCard,
+  PreviousCard,
+} from "../../../../components/medicineHistory";
+import { getUser, register } from "../../../../actions/user/userController";
 
 const page = () => {
+  const [displayOrders, setDisplayOrders] = useState("previous");
+  // const [user, setUser] = useState([]);
+  // getUser();
+
+  const [user, setUser] = useState([]);
+
+  const extractData = async () => {
+    const userData = await register();
+    setUser(userData);
+  };
+
+  useEffect(() => {
+    extractData();
+    console.log(user);
+  }, []);
+
   return (
-    <div className=" bg-blue-100 h-screen w-[85vw] flex overflow-auto ">
+    <div className="  h-screen w-[85vw] flex overflow-auto ">
       <div className="p-5 h-full w-1/5 overflow-hidden ">
         <div className="h-full bg-white rounded-lg gap-10">
           <h4 className="text-3xl font-bold flex justify-center items-center pt-10">
@@ -35,51 +58,46 @@ const page = () => {
         </div>
       </div>
       <div className="h-full w-4/5 p-5 pl-2 ">
-        <div className=" bg-white h-full rounded-lg p-14">
-          <div className="grid grid-cols-2 grid-rows-2  mt-5 gap-10">
-            {boxs.map((box) => (
-              <Card>
-                <CardHeader className="flex justify-between flex-row">
-                  <div>
-                    <CardTitle
-                      className={cn("text-2xl font-bold", montserrat.className)}
-                    >
-                      {box.heading}
-                    </CardTitle>
-                    <CardDescription
-                      className={cn(
-                        "text-xl font-semibold ",
-                        montserrat.className
-                      )}
-                    >
-                      {box.condition}
-                    </CardDescription>
-                  </div>
-                  <div>
-                    <CardTitle className="p-2">
-                      <span
-                        className={
-                          (cn("text-2xl font-bold", montserrat.className),
-                          cn("h-5 w-5 mr-3", box.color))
-                        }
-                      >
-                        {box.value}
-                      </span>
-                      <span
-                        className={cn(
-                          "text-xl font-semibold",
-                          montserrat.className,
-                          "pl-2"
-                        )}
-                      >
-                        {box.measurement}
-                      </span>
-                    </CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="w-full">{box.graph}</CardContent>
-              </Card>
-            ))}
+        <div className=" bg-blue-100 h-full rounded-lg p-14">
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-row justify-start w-full mb-5 gap-10">
+              <div className="flex justify-start">
+                <button
+                  className={`bg-blue-400 text-white px-4 py-2 rounded-md hover:bg-blue-500 focus:bg-blue-700 ${
+                    displayOrders === "previous" ? "bg-blue-700" : ""
+                  }`}
+                  onClick={() => setDisplayOrders("previous")} // Set displayOrders state to 'previous' when button is clicked
+                >
+                  Previous Orders
+                </button>
+              </div>
+              <div className="flex justify-center">
+                <button
+                  className={`bg-blue-400 text-white px-4 py-2 rounded-md hover:bg-blue-500 focus:bg-blue-700 ${
+                    displayOrders === "current" ? "bg-blue-700" : ""
+                  }`}
+                  onClick={() => setDisplayOrders("current")} // Set displayOrders state to 'current' when button is clicked
+                >
+                  Current Orders
+                </button>
+              </div>
+            </div>
+            <div className="w-full flex flex-col gap-5">
+              {displayOrders === "current" && (
+                <>
+                  <CurrentCard />
+                  <CurrentCard />
+                </>
+              )}
+              {displayOrders === "previous" && (
+                <>
+                  <PreviousCard />
+                  <PreviousCard />
+                  <PreviousCard />
+                  <PreviousCard />
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
