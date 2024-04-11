@@ -17,7 +17,7 @@ const MapComponent = () => {
         const finalCoords = [29.8646667, 77.8926944]; // Example final coordinates
 
         // Create map instance
-        const map = L.map('map').setView([28.2380, 83.9956], 11);
+        const map = L.map('map').setView(initialCoords, 11);
         const mapLink = "<a href='http://openstreetmap.org'>OpenStreetMap</a>";
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'Leaflet &copy; ' + mapLink + ', contribution', maxZoom: 18 }).addTo(map);
 
