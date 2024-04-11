@@ -24,7 +24,7 @@ Configure environment variables for necessary API keys and settings.
 Run the application using the appropriate npm or yarn scripts.
 Access the application via the provided URL.
 
-Requirements:
+##Requirements:
 
 Node.js and npm/yarn installed on your system.
 API keys and credentials for services like Twilio, Stripe, and Map API.
@@ -34,5 +34,4 @@ Compatible web browser for accessing the application.
 
 Contributing:
 Contributions to this project are welcome! Feel free to fork the repository, make changes, and submit pull requests. Make sure to follow the contribution guidelines and maintain code quality and consistency.
-## SetUp Guide 
-- 1)- Run npm install
+
