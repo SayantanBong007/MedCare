@@ -78,3 +78,19 @@ export const UserMap1 = () => {
     </div>
   );
 };
+export const UserMap2 = () => {
+  return (
+    <div className=" h-[100%] ml-[1rem] w-full">
+      <div className=" bg-white rounded-[0.4rem] p-[1rem] ">
+        <div>
+          <Graph width="35rem" height="30rem" data={data2} />
+        </div>
+      </div>
+      <div className="flex justify-center item-center p-5">
+        <div>
+          <h3 className="text-2xl font-bold">Users Activity</h3>
+        </div>
+      </div>
+    </div>
+  );
+};

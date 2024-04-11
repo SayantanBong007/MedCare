@@ -1,13 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CurrentCard,
   PreviousCard,
 } from "../../../../components/medicineHistory";
+import { getUser, register } from "../../../../actions/user/userController";
 
 const page = () => {
   const [displayOrders, setDisplayOrders] = useState("previous");
+  // const [user, setUser] = useState([]);
+  // getUser();
+
+  const [user, setUser] = useState([]);
+
+  const extractData = async () => {
+    const userData = await register();
+    setUser(userData);
+  };
+
+  useEffect(() => {
+    extractData();
+    console.log(user);
+  }, []);
 
   return (
     <div className="  h-screen w-[85vw] flex overflow-auto ">
