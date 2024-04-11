@@ -1,7 +1,6 @@
 # MedCare
 
-## Architecture Used
-
+## Architecture 
 ### Medcare
 
 - **Frontend:** Next.js
