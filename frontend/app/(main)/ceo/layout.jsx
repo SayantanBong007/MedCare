@@ -1,5 +1,5 @@
-import SidebarCeo from "@/components/sidebarCeo";
-import Navbarceo from "@/components/navbarCeo";
+import SidebarCeo from "/components/sidebarCeo";
+import Navbarceo from "/components/navbarCeo";
 
 export default function ManagerLayout({ children }) {
   return (

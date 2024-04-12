@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import Sidebar from "./sidebarManager";
 import { useEffect, useState } from "react";
 
-const MobileSidebar = () => {
+const MobileSidebarManger = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -32,4 +32,4 @@ const MobileSidebar = () => {
   );
 };
 
-export default MobileSidebar;
+export default MobileSidebarManger;

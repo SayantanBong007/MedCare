@@ -27,48 +27,23 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const signInGoogle = async (accessToken) => {
-  try {
-    const { data } = await API.post("/api/v1/login", {
-      googleAccessToken: accessToken,
-    });
-    return { result: data.success, user: data.user, message: "Login success" };
-  } catch (error) {
-    console.log(error);
-    return { result: false, message: "Login Failed" };
-  }
-};
-
-export const signUpGoogle = async (accessToken) => {
-  try {
-    const { data } = await API.post("/api/v1/register", {
-      googleAccessToken: accessToken,
-    });
-    return {
-      result: data.success,
-      user: data.user,
-      message: "Registration success",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      result: false,
-      message:
-        "Registration Failed, account already exist with the given email",
-    };
-  }
-};
-
 export async function register(user) {
   try {
-    const { data } = await axios.post(
-      `${base_url}/api/v1/register`,
-      user,
-      config
-    );
+    const rUser = await axios.post(`${base_url}/api/v1/user/register`, user);
+    console.log(rUser);
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7);
+    // Store access token in a cookie
+    document.cookie = `refreshToken=${
+      rUser.data.data.refreshToken
+    }; expires=${expirationDate.toUTCString()}; path=/`;
+    // Store refresh token in a cookie
+    document.cookie = `accessToken=${
+      rUser.data.data.accessToken
+    }; expires=${expirationDate.toUTCString()}; path=/`;
     return {
-      result: data.success,
-      user: data.user,
+      success: rUser.data.success,
+      user: rUser.data.data,
       message: "Registration Success ",
     };
   } catch (error) {
@@ -83,9 +58,23 @@ export async function register(user) {
 
 export async function login(user) {
   try {
-    const { data } = await axios.post(`${base_url}/api/v1/login`, user, config);
-    console.log("user", user);
-    return { result: data.success, user: data.user, message: "Login Success " };
+    const lUser = await axios.post(`${base_url}/api/v1/user/login`, user);
+    console.log("user", lUser);
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7);
+    // Store access token in a cookie
+    document.cookie = `refreshToken=${
+      lUser.data.data.refreshToken
+    }; expires=${expirationDate.toUTCString()}; path=/`;
+    // Store refresh token in a cookie
+    document.cookie = `accessToken=${
+      lUser.data.data.accessToken
+    }; expires=${expirationDate.toUTCString()}; path=/`;
+    return {
+      success: lUser.data.success,
+      user: lUser.data.data,
+      message: "Login Success ",
+    };
   } catch (error) {
     console.log(error);
     return { result: false, message: "Login Failed" };
@@ -95,6 +84,7 @@ export async function login(user) {
 export async function logout() {
   try {
     const { data } = await axios.get(`${base_url}/api/v1/logout`, config);
+    console.log(data.success);
     return data.success;
   } catch (error) {
     console.log(error);
@@ -136,10 +126,14 @@ export async function getDocuments() {
 
 export async function getUser() {
   try {
-    const { data } = await axios.get(`${base_url}/api/v1/user`, config);
+    const user = await axios.get(
+      `${base_url}/api/v1/user/current-user`,
+      config
+    );
+    console.log(user);
     return {
-      result: data.success,
-      user: data.user,
+      result: user.data.success,
+      user: user.data.data,
     };
   } catch (error) {
     console.log(error);
