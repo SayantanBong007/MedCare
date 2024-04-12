@@ -1,93 +1,135 @@
-import { asyncHandler } from '../utils/asyncHandler.js'
+import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { ApiError } from "../utils/ApiError.js"
-import { Review } from '../model/reviews.js';
+import { ApiError } from "../utils/ApiError.js";
+import { Review } from "../model/reviews.js";
+import mongoose from "mongoose";
 
-const getreview = asyncHandler(async(req,res)=>{
-    const review = await Review.find(req.query).populate('author');
+const getreview = asyncHandler(async (req, res) => {
+  const { medicine } = req.query;
+  console.log("hello");
+  console.log(medicine);
+  // const medicineObjectId = new mongoose.Types.ObjectId(medicine);
 
-    if (!review) {
-        throw new ApiError(500, "Something went wrong while fetching the review")
+  const review = await Review.find({ medicine: medicine });
+  // console.log({ medicine });
+  console.log(review);
+
+  if (!review) {
+    throw new ApiError(500, "Something went wrong while fetching the review");
+  }
+
+  return res
+    .status(201)
+    .json(new ApiResponse(200, review, "get review Successfully"));
+});
+
+const postreview = asyncHandler(async (req, res) => {
+  console.log(req.body);
+  if (req.body != null) {
+    req.body.author = req.user._id;
+    const review = await Review.create(req.body);
+    const data = await Review.findById(review._id).populate("author");
+
+    if (!data) {
+      throw new ApiError(500, "Something went wrong while posting the review");
     }
+    return res
+      .status(201)
+      .json(new ApiResponse(200, data, "post review Successfully"));
+  } else {
+    throw new ApiError(500, "review not found in request body");
+  }
+});
 
-    return res.status(201).json(
-        new ApiResponse(200, review, "get review Successfully"))
-})
+const getspecificReview = asyncHandler(async (req, res) => {
+  const review = await Review.findById(req.params.reviewId).populate("author");
+  if (!review) {
+    throw new ApiError(500, "Something went wrong while getting the review");
+  }
+  return res
+    .status(201)
+    .json(new ApiResponse(200, review, "get review Successfully"));
+});
 
-const postreview = asyncHandler(async(req,res)=>{
-    console.log(req.body);
-    if(req.body!=null){
-        req.body.author=req.user._id;
-       const review = await Review.create(req.body);
-       const data = await Review.findById(review._id).populate('author');
+const putspecificReview = asyncHandler(async (req, res) => {
+  const review = await Review.findById(req.params.reviewId);
+  if (review != null) {
+    if (!review.author.equals(req.user._id)) {
+      return res
+        .status(403)
+        .json(
+          new ApiResponse(
+            200,
+            review,
+            "You are not authorized to update this review"
+          )
+        );
+    }
+    req.body.author = req.user._id;
+    const data = await Review.findByIdAndUpdate(
+      req.params.reviewId,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    if (!data) {
+      throw new ApiError(500, "Something went wrong while updating the review");
+    }
+    return res
+      .status(201)
+      .json(new ApiResponse(200, data, "update review Successfully"));
+  } else {
+    return res
+      .status(201)
+      .json(
+        new ApiResponse(
+          404,
+          "failure",
+          "review" + req.params.reviewId + "not found"
+        )
+      );
+  }
+});
 
-       if(!data){
-         throw new ApiError(500, "Something went wrong while posting the review");
-       }
-       return res.status(201).json(
-        new ApiResponse(200, data, "post review Successfully"))
+const deleteReview = asyncHandler(async (req, res) => {
+  const review = await Review.findById(req.params.reviewId);
+  if (review != null) {
+    if (!review.author.equals(req.user._id)) {
+      return res
+        .status(403)
+        .json(
+          new ApiResponse(
+            403,
+            review,
+            "You are not authorized to update this review"
+          )
+        );
     }
-    else {
-        throw new ApiError(500, "review not found in request body");
+    const data = await Review.findByIdAndRemove(req.params.reviewId);
+    if (!data) {
+      throw new ApiError(500, "Something went wrong while deleting the review");
     }
-})
-
-const getspecificReview = asyncHandler(async(req,res)=>{
-    const review = await Review.findById(req.params.reviewId).populate('author');
-    if(!review){
-        throw new ApiError(500, "Something went wrong while getting the review");
-      }
-      return res.status(201).json(
-       new ApiResponse(200, review, "get review Successfully"))
-})
-
-const putspecificReview = asyncHandler(async(req,res)=>{
-    const review = await Review.findById(req.params.reviewId);
-    if(review!=null){
-        if(!review.author.equals(req.user._id)){
-            return res.status(403).json(
-                new ApiResponse(200, review, "You are not authorized to update this review"))
-        }
-        req.body.author = req.user._id;
-        const data = await Review.findByIdAndUpdate(req.params.reviewId,{
-            $set:req.body
-        },{new:true});
-        if(!data){
-            throw new ApiError(500, "Something went wrong while updating the review");
-        }
-        return res.status(201).json(
-          new ApiResponse(200, data, "update review Successfully"))
-    }
-    else{
-        return res.status(201).json(
-            new ApiResponse(404, "failure", 'review'+req.params.reviewId+'not found'));
-    }
-})
-
-const deleteReview = asyncHandler(async(req,res)=>{
-    const review =await  Review.findById(req.params.reviewId);
-    if(review!=null){
-        if(!review.author.equals(req.user._id)){
-            return res.status(403).json(
-                new ApiResponse(403, review, "You are not authorized to update this review"))
-        }
-        const data = await Review.findByIdAndRemove(req.params.reviewId);
-        if(!data){
-            throw new ApiError(500, "Something went wrong while deleting the review");
-        }
-        return res.status(201).json(
-            new ApiResponse(200, data, "Review delete successfully"));
-    }
-    else{
-        return res.status(201).json(
-            new ApiResponse(404, "failure", 'review'+req.params.reviewId+'not found'));
-    }
-})
+    return res
+      .status(201)
+      .json(new ApiResponse(200, data, "Review delete successfully"));
+  } else {
+    return res
+      .status(201)
+      .json(
+        new ApiResponse(
+          404,
+          "failure",
+          "review" + req.params.reviewId + "not found"
+        )
+      );
+  }
+});
 
 export {
-    getreview,
-    postreview,
-    getspecificReview,
-    putspecificReview,
-    deleteReview
-}
+  getreview,
+  postreview,
+  getspecificReview,
+  putspecificReview,
+  deleteReview,
+};

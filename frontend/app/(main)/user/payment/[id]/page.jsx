@@ -1,18 +1,32 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import {
+  OrderRegister,
+  getMedicineDetails,
+} from "../../../../../actions/medicine/medicineContriller";
 
 const PaymentPage = () => {
   const router = useRouter();
+
+  const searhParams = useSearchParams();
+  const price = searhParams.get("price");
+  const quantity = searhParams.get("quantity");
+
+  console.log(price);
+  console.log(quantity);
+
   const [loading, setLoading] = useState(false);
   const [product] = useState({
     _id: 1,
     name: "Dolo 250",
-    price: 10,
-    quantity: 2,
+    price: price,
+    quantity: quantity,
   });
   const [cardDetails, setCardDetails] = useState({
     cardNumber: "",
@@ -58,10 +72,9 @@ const PaymentPage = () => {
         .post("http://localhost:4000/api/v1/reciept", user)
         .then((response) => setMsg(response.data.respMesg));
 
-        await axios.post("http://localhost:4000/api/v1/message", data);
+      // await axios.post("http://localhost:4000/api/v1/message", data);
 
-        router.push("http://localhost:3000/user/profile");
-        
+      router.push("/user/confirmorders");
     } else {
       console.log("Payment failed");
     }
@@ -69,15 +82,36 @@ const PaymentPage = () => {
     setLoading(false);
   };
 
+  const [last, setLast] = useState("");
+  const [med, setMed] = useState({});
+  const extractMedicineDetails = async (id) => {
+    const data = await getMedicineDetails(id);
+    setMed(data.spmed);
+  };
+
+  const pathname = usePathname();
+
+  // Triggered when last changes
+
+  useEffect(() => {
+    const parseUrlParams = () => {
+      const parts = pathname.split("/");
+
+      const lastPart = parts.pop();
+      setLast(lastPart);
+      console.log("Last part of the URL:", lastPart);
+    };
+    parseUrlParams();
+    // Call the parseUrlParams function
+  }, []);
+  console.log(last);
   return (
-    <div className="h-[100vh] w-[100vw] flex items-center justify-center bg-blue-100">
+    <div className="h-[100vh] w-[85vw] flex items-center justify-center bg-blue-100">
       <div className="absolute left-6 top-4 flex items-center ">
-        <div className="flex flex-row  gap-3">
-          <h1 className="text-blue-600 text-xl">MedCare</h1>
-        </div>
+        <div className="flex flex-row  gap-3"></div>
       </div>
 
-      <div className="bg-white rounded-sm w-[40%] h-fit p-8 flex flex-col justify-center align-items">
+      <div className="bg-white rounded-lg w-[45%] h-fit p-8 flex flex-col justify-center align-items shadow-lg border-2 border-blue-500 ">
         <div className="flex justify-center items-center mt-5 pt-10">
           <h2 className="text-6xl mb-[3.5rem] font-bold">
             {loading ? "Loading..." : "GPay"}
@@ -94,7 +128,7 @@ const PaymentPage = () => {
 
                 <div style={{ marginLeft: "20px" }}>
                   <p>
-                    {product.name} - ₹{product.price}
+                    {product.name} - ${product.price}
                   </p>
                   <p style={{ marginBottom: "20px" }}>
                     Quantity - {product.quantity}
@@ -102,7 +136,7 @@ const PaymentPage = () => {
                   <p style={{ marginBottom: "40px" }}>
                     Final Price -{" "}
                     <b style={{ fontSize: "2.4em" }}>
-                      ₹{product.price * product.quantity}
+                      ${product.price * product.quantity}
                     </b>
                   </p>
                 </div>

@@ -48,6 +48,7 @@ const page = () => {
         "https://api.maptiler.com/maps/streets-v2/style.json?key=eYEzTHGTC1rxkqJeeNuJ", // Example style
       center: [long - 0.0040507, lat - 0.0040507], // Example center [lng, lat]
       zoom: 15, // Example zoom
+      attributionControl: false,
     });
 
     const marker = new Marker({
@@ -88,8 +89,14 @@ const page = () => {
       console.error(error);
     }
   }, [lat]);
+
+  const locString = JSON.stringify({ location: loc });
+  console.log(loc);
+  // Store the stringified object in localStorage
+  localStorage.setItem("location", loc);
+
   return (
-    <div className="absolute left-[15vw] w-[85vw] h-max bg-[#E1EEFF] pt-[5rem] pl-[3rem]">
+    <div className="absolute left-[15vw] w-[85vw] h-max bg-[#E1EEFF] pt-[5rem] pl-[3rem] ">
       <div className="flex justify-around items-center">
         <div>
           <div className="flex">
@@ -104,12 +111,12 @@ const page = () => {
           <div
             id="map"
             ref={mapContainer}
-            className="w-[19rem] h-[10rem] mt-[1rem] mr-[0.5rem]  rounded-md"
+            className="w-[28rem] h-[12rem] mt-[1rem] mr-[0.5rem]  rounded-lg ml-5"
           >
             {/* map */}
           </div>
         </div>
-        <div className="h-[15rem] w-[54rem] rounded-xl relative bg-[#0360D9] text-[#FFFFFF]">
+        <div className="h-[15rem] w-[50rem] rounded-lg relative bg-[#0360D9] text-[#FFFFFF]">
           <div className="font-['Nunito Sans']">
             <h1 className="font-bold text-[2rem] mt-[2rem] ml-[6rem]">
               Welcome to MedCare!
