@@ -36,12 +36,12 @@ const routes = [
     href: "/manager/profile",
     color: "text-violet-500",
   },
-  {
-    label: "Details",
-    icon: BarChart3,
-    href: "/manager/details",
-    color: "text-pink-500",
-  },
+  // {
+  //   label: "Details",
+  //   icon: BarChart3,
+  //   href: "/manager/details",
+  //   color: "text-pink-500",
+  // },
 
   {
     label: "Log Out",

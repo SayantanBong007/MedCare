@@ -1,7 +1,18 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import StoreAnalysis from "../../../../../components/storeAnalysis";
+import { getStoreDetails } from "../../../../../actions/store/storeController";
 
 const page = () => {
+  const [last, setLast] = useState("");
+  const [store, setStore] = useState([]);
+  const extractStoreDetails = async (id) => {
+    const data = await getStoreDetails(id);
+    setStore(data.spmed);
+    // console.log(id);
+    console.log(data);
+  };
   return (
     <div className=" h-screen w-[85vw] flex ">
       <div className="h-full w-full p-5  ">
