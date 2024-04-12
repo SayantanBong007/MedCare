@@ -14,6 +14,10 @@ const page = () => {
   const [loc, setLoc] = useState("");
   const [arr, SetArr] = useState([]);
 
+  const [query, setQuery] = useState("");
+
+  const [searchParam] = useState(["storename", "name"]);
+
   const extractdata = async () => {
     const result = await getMedicine();
     SetArr(result.medicine);
@@ -90,10 +94,25 @@ const page = () => {
     }
   }, [lat]);
 
-  const locString = JSON.stringify({ location: loc });
+  const locString = JSON.stringify({
+    location: loc,
+    latitude: lat,
+    longitude: long,
+  });
   console.log(loc);
   // Store the stringified object in localStorage
-  localStorage.setItem("location", loc);
+  localStorage.setItem("location", locString);
+
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+    const filteredArr = arr.filter((item) => {
+      return searchParam.some((param) => {
+        return item[param].toLowerCase().includes(query.toLowerCase());
+      });
+      // return item.name.toLowerCase().includes(query.toLowerCase());
+    });
+    SetArr(filteredArr);
+  };
 
   return (
     <div className="absolute left-[15vw] w-[85vw] h-max bg-[#E1EEFF] pt-[5rem] pl-[3rem] ">
@@ -145,14 +164,16 @@ const page = () => {
         </div>
       </div>
       <div className="bottom">
-        <div className="flex items-center">
+        <div className="flex items-center mt-10">
           {/* searchbar */}
           <input
-            placeholder="Search your medicine"
-            className="mt-[3rem] ml-[5rem] h-[3rem] w-[54rem] p-[2rem] rounded-md shadow-md text-black"
+            placeholder="Search Store"
+            className=" h-[3rem] w-[75%] p-[2rem] ml-10 rounded-md shadow-md text-black transition-colors duration-300 ease-in-out hover:bg-gray-100"
             type="text"
+            value={query}
+            onChange={(e) => handleSearch(e)}
           />
-          <button className="h-[4rem] w-[10rem] ml-[4rem] mt-[2.5rem] bg-[#0360D9] p-[1rem] rounded-md text-[1.4rem] flex justify-center items-center hover:text-white ">
+          <button className="h-[4rem] w-[10rem] bg-blue-500  ml-5 p-[1rem] rounded-md text-[1.4rem] flex justify-center items-center hover:bg-blue-600 hover:text-white transition-colors duration-300 ease-in-out">
             Search
           </button>
         </div>

@@ -21,6 +21,7 @@
     "clsx": "^2.1.0",
     "google-map-react": "^2.2.1",
     "leaflet": "^1.9.4",
+    "leaflet-routing-machine": "^3.2.12",
     "lucide-react": "^0.365.0",
     "maplibre-gl": "^4.1.2",
     "next": "14.1.4",

@@ -101,7 +101,7 @@ const page = () => {
                 </select>
               </div>
               <Link
-                href={`/user/payment/${last}?price=${med.price}&quantity=${quantity}`}
+                href={`/user/payment/${last}?price=${med.price}&quantity=${quantity}&name=${med.name}`}
               >
                 <button className="bg-[#0360D9] p-[1rem] ml-[2rem] w-[8rem]  rounded-md text-[#FFFFFF] text-[1.2rem]">
                   Buy Now
@@ -115,7 +115,7 @@ const page = () => {
         </div>
         <div className="mt-[2.5rem] flex w-full justify-between items-center">
           <h2 className="text-3xl text-black  ">Reviews:</h2>
-          <Link href="/user/medicine/id/writereview">
+          <Link href={`/user/medicine/${last}/writereview`}>
             <button className="bg-[#0360D9] p-[1rem] w-[9rem]  rounded-md text-[#FFFFFF] text-[1.3rem] flex items-center justify-around">
               <Pencil />
               <span>Write</span>

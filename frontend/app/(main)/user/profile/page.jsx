@@ -6,10 +6,14 @@ import {
   PreviousCard,
 } from "../../../../components/medicineHistory";
 import { getUser, register } from "../../../../actions/user/userController";
+import { getOrders } from "../../../../actions/store/storeController";
 
 const page = () => {
   const [displayOrders, setDisplayOrders] = useState("previous");
   const [user, setUser] = useState([]);
+  const [order, setOrder] = useState({ orders: [] });
+  const [previousOrder, setPreviousOrder] = useState([]);
+  const [currentOrder, setCurrentOrder] = useState([]);
 
   const extractdata = async () => {
     const result = await getUser();
@@ -21,10 +25,66 @@ const page = () => {
     console.log(user);
   }, []);
 
-  const useridString = JSON.stringify({ userid: user._id });
+  // const useridString = JSON.stringify({ userid: user._id });
 
-  // Store the stringified object in localStorage
-  localStorage.setItem("userid", useridString);
+  // // Store the stringified object in localStorage
+  // localStorage.setItem("userid", useridString);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const data = await getOrders();
+        console.log(data.order);
+
+        setOrder(data.order);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        // Handle error if needed
+      }
+    };
+
+    fetchOrders();
+  }, []);
+  console.log(order);
+
+  useEffect(() => {
+    console.log(order);
+    if (order) {
+      try {
+        const previousOrders = worker.filter(
+          (item) =>
+            item.ordertype !== true &&
+            item.storename.toLowerCase().includes(name.toLowerCase())
+        );
+
+        // setCurrentOrder(currentOrders);
+        setPreviousOrder(previousOrders);
+      } catch (error) {
+        console.error("Error filtering orders:", error);
+      }
+    }
+  }, [order]);
+
+  useEffect(() => {
+    console.log(order);
+    if (order) {
+      try {
+        const currentOrders = order.filter(
+          (item) =>
+            item.ordertype === true &&
+            item.storename.toLowerCase().includes(name.toLowerCase())
+        );
+
+        setCurrentOrder(currentOrders);
+        // setPreviousOrder(previousOrders);
+      } catch (error) {
+        console.error("Error filtering orders:", error);
+      }
+    }
+  }, [order]);
+
+  console.log(currentOrder);
+  console.log(previousOrder);
 
   return (
     <div className="  h-screen w-[85vw] flex overflow-auto ">
@@ -85,20 +145,14 @@ const page = () => {
               </div>
             </div>
             <div className="w-full flex flex-col gap-5">
-              {displayOrders === "current" && (
-                <>
-                  <CurrentCard />
-                  <CurrentCard />
-                </>
-              )}
-              {displayOrders === "previous" && (
-                <>
-                  <PreviousCard />
-                  <PreviousCard />
-                  <PreviousCard />
-                  <PreviousCard />
-                </>
-              )}
+              {displayOrders === "current" &&
+                currentOrder.map((order, index) => (
+                  <CurrentCard key={index} order={order} />
+                ))}
+              {displayOrders === "previous" &&
+                previousOrder.map((order, index) => (
+                  <PreviousCard key={index} order={order} />
+                ))}
             </div>
           </div>
         </div>

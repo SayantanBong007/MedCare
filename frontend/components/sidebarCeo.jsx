@@ -31,12 +31,12 @@ const routes = [
     color: "text-cyan-500",
   },
 
-  {
-    label: "Details",
-    icon: BarChart3,
-    href: "/ceo/store",
-    color: "text-pink-500",
-  },
+  // {
+  //   label: "Details",
+  //   icon: BarChart3,
+  //   href: "/ceo/store",
+  //   color: "text-pink-500",
+  // },
 
   {
     label: "Log Out",

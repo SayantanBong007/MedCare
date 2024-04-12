@@ -23,7 +23,7 @@ const page = () => {
           <div className="flex flex-col justify-center items-center p-2 pt-10">
             <img
               className="h-50 w-50 bg-green-400 m-5 rounded-md"
-              src="/pic.jpg"
+              src="/y.png"
               alt="user photo"
             />
             <h5 className="text-2xl font-bold m-5 pt-10">User Details</h5>
@@ -32,15 +32,17 @@ const page = () => {
           <div className="flex justify-start pl-3 flex-col flex-1 gap-8">
             <div className="pt-3">
               <div className="text-sm">Name:</div>
-              <div className="font-bold text-xl pt-2">Tanjiro Kamado</div>
+              <div className="font-bold text-xl pt-2">Saynatan Gain</div>
             </div>
             <div className="pt-3">
               <div className="text-sm">Contact Number:</div>
-              <div className="font-bold text-xl pt-2">96842236875</div>
+              <div className="font-bold text-xl pt-2">8100523350</div>
             </div>
             <div className="pt-3">
               <div className="text-sm">Email Id:</div>
-              <div className="font-bold text-xl pt-2">tanjiro@gmail.com</div>
+              <div className="font-bold text-xl pt-2">
+                Sayantangainh632@gmail.com
+              </div>
             </div>
           </div>
         </div>

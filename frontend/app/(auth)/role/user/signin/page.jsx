@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { login } from "../../../../../actions/user/userController";
+import { getUser, login } from "../../../../../actions/user/userController";
 const SignInPage = () => {
   const router = useRouter();
 
@@ -30,7 +30,23 @@ const SignInPage = () => {
       });
       console.log(success);
       if (success) {
-        router.push("/user");
+        extractdata();
+        console.log(luser);
+        const rolestring = JSON.stringify(luser.role);
+        localStorage.setItem("role", rolestring);
+        const namestring = JSON.stringify(luser.fullName);
+        localStorage.setItem("name", namestring);
+        const phonestring = JSON.stringify(luser.phone);
+        localStorage.setItem("phone", phonestring);
+        const emailstring = JSON.stringify(luser.email);
+        localStorage.setItem("email", emailstring);
+        if (luser.role == "user") {
+          router.push("/user");
+        } else if (luser.role == "manager") {
+          router.push("/manager");
+        } else if (luser.role == "ceo") {
+          router.push("/ceo");
+        }
       } else {
         toast.error(message);
       }
@@ -41,6 +57,16 @@ const SignInPage = () => {
       setLoading(false);
     }
   };
+  const [luser, setluser] = useState({});
+  const extractdata = async () => {
+    const result = await getUser();
+    setluser(result.user);
+  };
+
+  // useEffect(() => {
+  //   extractdata();
+  //   console.log(luser);
+  // }, []);
 
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center bg-blue-100">
@@ -92,6 +118,7 @@ const SignInPage = () => {
                 Sign In
               </ActionButton>
               <br></br>
+
               <div className="m-2">
                 Don't have an account?
                 <Link href="/role/user/signup" className="hover:text-blue-800">

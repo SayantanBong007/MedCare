@@ -27,7 +27,7 @@ const page = () => {
             <div className="p-[1rem] w-full h-full border-2 border-[#0360D9] flex justify-center items-center shadow-sm  rounded-sm hover:shadow-lg">
               <img className="w-full h-full" src="/doctor.png" alt="" />
             </div>
-            <Link href="/role/manager/signin">
+            <Link href="/role/user/signin">
               <button className="mt-[2rem] rounded-md w-full flex h-[2rem] justify-center items-center bg-[#0360D9] text-[#FFFFFF] font-semibold font-['Nunito_Sans']">
                 Manager Login
               </button>
@@ -37,7 +37,7 @@ const page = () => {
             <div className="p-[1rem] w-full h-full border-2 border-[#0360D9] flex justify-center items-center shadow-sm  rounded-sm hover:shadow-lg">
               <img className="w-full h-full" src="/Character.png" alt="" />
             </div>
-            <Link href="/role/ceo/signin">
+            <Link href="/role/user/signin">
               <button className="mt-[2rem] rounded-md w-full flex h-[2rem] justify-center items-center bg-[#0360D9] text-[#FFFFFF] font-semibold font-['Nunito_Sans']">
                 Ceo Login
               </button>

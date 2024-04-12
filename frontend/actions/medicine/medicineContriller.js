@@ -83,3 +83,21 @@ export async function getReview(medicine) {
     };
   }
 }
+
+export async function postReview(review) {
+  console.log(review);
+  try {
+    const rev = axios.post(`${base_url}/api/v1/review`, review);
+    return {
+      success: rev.data.success,
+      review: rev.data.data,
+      message: "success",
+    };
+  } catch (err) {
+    return {
+      result: false,
+      message:
+        "Registration Failed, account already exist with the given email ",
+    };
+  }
+}

@@ -5,6 +5,7 @@ import {
   registerStore,
   updateStoreDetails,
   getAllStore,
+  getNear,
 } from "../Controllers/store.controller.js";
 
 const router = Router();

@@ -18,7 +18,7 @@ export const data1 = {
       data: [75, 72, 75, 73, 76, 73, 78],
       fill: false,
       //   borderColor: "rgb(105,105,105)",
-      //   backgroundColor: "#9BD0F5",
+      backgroundColor: "#9BD0F5",
       tension: 0.4,
     },
     {
@@ -26,6 +26,7 @@ export const data1 = {
       data: [125, 126, 124, 115, 120, 122, 128],
       fill: false,
       borderColor: "rgb(0, 71, 171)",
+      backgroundColor: "#9BD0F5",
       tension: 0.4,
     },
   ],
@@ -36,7 +37,7 @@ export const data2 = {
   datasets: [
     {
       label: "user",
-      data: [10, 30, 75, 40],
+      data: [10, 30, 75, 40, 85, 25, 45],
       fill: false,
 
       borderColor: "rgb(210, 43, 43)",

@@ -17,6 +17,7 @@ const PaymentPage = () => {
   const searhParams = useSearchParams();
   const price = searhParams.get("price");
   const quantity = searhParams.get("quantity");
+  const name = searhParams.get("name");
 
   console.log(price);
   console.log(quantity);
@@ -24,7 +25,7 @@ const PaymentPage = () => {
   const [loading, setLoading] = useState(false);
   const [product] = useState({
     _id: 1,
-    name: "Dolo 250",
+    name: name,
     price: price,
     quantity: quantity,
   });
@@ -32,6 +33,8 @@ const PaymentPage = () => {
     cardNumber: "",
     cvv: "",
   });
+
+  const email = JSON.parse(localStorage.getItem("email"));
   const [user, setUser] = useState({
     to: "jainaviral2002@gmail.com",
     subject: "Invoice for your purchase at MedCare",

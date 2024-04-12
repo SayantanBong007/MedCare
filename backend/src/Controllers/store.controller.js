@@ -87,10 +87,53 @@ const getAllStore = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, store, "get medicines Successfully"));
 });
 
+const getNear = asyncHandler(async (req, res) => {
+  try {
+    const userCoordinates = req.body.coordinates; // Assuming coordinates are provided in the request body
+
+    // Retrieve all stores from the database
+    const stores = await Store.find();
+
+    // Calculate distances of all stores from user coordinates
+    stores.forEach((store) => {
+      const distance = calculateDistance(
+        userCoordinates[0],
+        userCoordinates[1],
+        store.location.coordinates[0],
+        store.location.coordinates[1]
+      );
+      const time = distance / 40;
+      store.distance = distance;
+      store.time = time;
+    });
+
+    // Sort stores by distance
+    stores.sort((a, b) => a.distance - b.distance);
+
+    // Select the 5 nearest stores
+    const nearestStores = stores.slice(0, 5);
+
+    // Send the nearest stores as a response
+    res.json(nearestStores);
+  } catch (error) {
+    // If an error occurs, send an error response
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Function to calculate distance using simple modulus
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const dx = lon2 - lon1;
+  const dy = lat2 - lat1;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
 export {
   registerStore,
   updateStoreDetails,
   getStoreDetails,
   deleteStore,
   getAllStore,
+  getNear,
 };

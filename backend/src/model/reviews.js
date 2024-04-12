@@ -18,7 +18,7 @@ const reviewSchema = new Schema(
     },
     medicine: {
       type: String,
-      ref: "Medicine",
+      ref: "Medi",
     },
   },
   {
