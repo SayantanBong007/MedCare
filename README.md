@@ -91,7 +91,7 @@ The Medicine Inventory Management System is a comprehensive web application desi
 ```
 Backend(in backend directory)-
 
-node index.js
+npm run dev
 
 
 Frontend(in frontend directory)-
