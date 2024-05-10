@@ -60,7 +60,7 @@ The Medicine Inventory Management System is a comprehensive web application desi
 #### Map Integration
 
 - **Mapping Library:** [Maplibre/GLJS](https://maplibre.org/)
-  - Maplibre/GLJS is a modern open-source JavaScript library for displaying maps based on Mapbox GL, providing interactive map functionalities for visualizing geographical data, routing, and location-based services.
+  -  MapLibre GL JS is an innovative open-source JavaScript library designed for rendering maps, built upon the foundation of Mapbox GL. It offers interactive mapping capabilities, enabling users to visualize geographical data, implement routing solutions, and utilize location-based services seamlessly within web applications.
 - **Geocoding Service:** [Trueway Geocoding](https://www.trueway.co/)
   - Trueway Geocoding is a geocoding API service that converts addresses into geographic coordinates (latitude and longitude) for mapping and location-based functionalities, enabling location-based search, routing, and distance calculation.
 
